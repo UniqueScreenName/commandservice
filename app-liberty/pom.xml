@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>ca.gc.customs.observability.commandservice</groupId>
+    <artifactId>commandservice-parent</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>commandservice-liberty</artifactId>
+  <packaging>war</packaging>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>ca.gc.customs.observability.commandservice</groupId>
+      <artifactId>command-core</artifactId>
+    </dependency>
+    <!-- Jakarta EE 8 API (javax namespace): provided by Open Liberty -->
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>8.0</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>commandservice-ol</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.3.2</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+
+      <!-- mvn package builds target/commandservice-liberty.jar, a self-contained runnable jar -->
+      <plugin>
+        <groupId>io.openliberty.tools</groupId>
+        <artifactId>liberty-maven-plugin</artifactId>
+        <version>3.8.2</version>
+        <configuration>
+          <runtimeArtifact>
+            <groupId>io.openliberty</groupId>
+            <artifactId>openliberty-runtime</artifactId>
+            <version>23.0.0.12</version>
+            <type>zip</type>
+          </runtimeArtifact>
+          <serverName>defaultServer</serverName>
+          <appsDirectory>dropins</appsDirectory>
+          <looseApplication>false</looseApplication>
+          <include>runnable</include>
+          <packageName>commandservice-liberty</packageName>
+        </configuration>
+        <executions>
+          <execution>
+            <id>package-server</id>
+            <phase>package</phase>
+            <goals>
+              <goal>create</goal>
+              <goal>deploy</goal>
+              <goal>package</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

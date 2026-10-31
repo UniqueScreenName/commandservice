@@ -1,0 +1,33 @@
+{
+  "commands": [
+    {
+      "command": "forward",
+      "description": "Service A forwards to B and returns whatever B responds with",
+      "parameters": {
+        "url": "http://service-b:8080/command-app/process",
+        "passthrough": true,
+        "payload": {
+          "commands": [
+            {
+              "command": "forward",
+              "description": "Service B forwards to C and returns whatever C responds with",
+              "parameters": {
+                "url": "http://service-c:8080/command-app/process",
+                "passthrough": true,
+                "payload": {
+                  "commands": [
+                    {
+                      "command": "return",
+                      "description": "Service C answers; this status and message bubble back up to the caller",
+                      "parameters": { "return_code": 418, "message": "teapot from service-c" }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "commands": [
+    {
+      "command": "delay",
+      "description": "Service A waits 2 seconds to simulate a slow initial response",
+      "parameters": { "delay_time": 2 }
+    },
+    {
+      "command": "forward",
+      "description": "Service A forwards a nested set of commands to Service B",
+      "parameters": {
+        "url": "http://service-b:8080/process",
+        "payload": {
+          "commands": [
+            {
+              "command": "forward",
+              "description": "Service B forwards commands to Service C",
+              "parameters": {
+                "url": "http://service-c:8080/process",
+                "payload": {
+                  "commands": [
+                    {
+                      "command": "return",
+                      "description": "Service C simulates an internal server error",
+                      "parameters": { "return_code": 500, "message": "Internal Server Error simulated in service-c" }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "command": "return",
+              "description": "Service B returns success if the forward to Service C is handled",
+              "parameters": { "return_code": 200, "message": "OK from service-b" }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "command": "return",
+      "description": "Service A returns a normal success response to the caller",
+      "parameters": { "return_code": 200, "message": "OK from service-a" }
+    }
+  ]
+}
