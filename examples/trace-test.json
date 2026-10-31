@@ -2,8 +2,8 @@
   "commands": [
     {
       "command": "delay",
-      "description": "Service A waits 2 seconds to simulate a slow initial response",
-      "parameters": { "delay_time": 2 }
+      "description": "Service A waits 2000 ms (2 seconds) to simulate a slow initial response",
+      "parameters": { "delay_time_in_ms": 2000 }
     },
     {
       "command": "forward",
@@ -17,6 +17,7 @@
               "description": "Service B forwards commands to Service C",
               "parameters": {
                 "url": "http://service-c:8080/process",
+                "method": "POST"
                 "payload": {
                   "commands": [
                     {

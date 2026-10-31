@@ -18,11 +18,13 @@ import java.util.Scanner;
 public class ForwardCommand implements Command {
 
     private final String url;
+    private final String method;
     private final String payload;
     private final boolean passthrough;
 
-    public ForwardCommand(String url, String payload, boolean passthrough) {
+    public ForwardCommand(String url, String method,String payload, boolean passthrough) {
         this.url = url;
+        this.method=method;
         this.payload = payload;
         this.passthrough = passthrough;
     }
@@ -31,7 +33,7 @@ public class ForwardCommand implements Command {
         HttpURLConnection conn = null;
         try {
             conn = (HttpURLConnection) new URL(url).openConnection();
-            conn.setRequestMethod("POST");
+            conn.setRequestMethod(method);
             conn.setConnectTimeout(10000);
             conn.setReadTimeout(30000);
             conn.setDoOutput(true);

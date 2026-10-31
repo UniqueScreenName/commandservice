@@ -13,6 +13,7 @@
               "description": "Service B forwards to C and returns whatever C responds with",
               "parameters": {
                 "url": "http://service-c:8080/command-app/process",
+                "method":"GET"
                 "passthrough": true,
                 "payload": {
                   "commands": [

@@ -22,7 +22,7 @@ body = the `message` (text/plain); invalid documents get 400.
   `app-liberty/deploy/ec2-userdata.sh` as instance user data.
 
 ## forward
-Parameters: `url`, `payload` (nested command document), optional `passthrough` (default false).
+Parameters: `url`, `payload` (nested command document), `method` (GET or POST), optional `passthrough` (default false).
 - default: downstream 4xx/5xx or connection failure stops execution with that error; otherwise the next command runs.
 - `passthrough: true`: downstream status and body are returned to the caller whatever the status.
 
