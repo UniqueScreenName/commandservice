@@ -107,7 +107,7 @@ def create_command(entry):
         milliseconds = params.get("delay_time_in_ms")
         if not is_number(milliseconds) or milliseconds < 0:
             raise ValueError("'delay_time_in_ms' needs a non-negative numeric delay_time_in_ms (milliseconds)")
-        return DelayCommand(delay_time_in_ms)
+        return DelayCommand(milliseconds)
 
     if name == "forward":
         url, method, payload = params.get("url"), params.get("method"), params.get("payload")
